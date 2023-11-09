@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\MailController;
 
-
+use App\Http\Controllers\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +22,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -33,7 +29,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/dashboard', function (Request $request) {
-    $this->$request->session()->flash('info', 'TEST flash messages');
+    $request->session()->flash('info', 'TEST flash messages');
     return view('dashboard');
  })->middleware(['auth','verified'])->name('dashboard');;
 
@@ -44,3 +40,7 @@ require __DIR__.'/auth.php';
 Route::get('mail/test', [MailController::class, 'test']);
 // or
 // Route::get('mail/test', 'App\Http\Controllers\MailController@test');
+
+
+Route::resource('files', FileController::class)
+        ->middleware(['auth', 'role:1']);
