@@ -44,3 +44,6 @@ Route::get('mail/test', [MailController::class, 'test']);
 
 Route::resource('files', FileController::class)
         ->middleware(['auth', 'role:1']);
+
+#Route::resource('post', PostController::class)
+#        ->middleware(['auth', 'role:1']);
