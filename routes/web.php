@@ -61,6 +61,10 @@ Route::resource('posts', PostController::class)
 Route::get('posts/{post}/delete', [PostController::class, 'delete'])->name('posts.delete')
     ->middleware(['auth', 'role.any:' . implode(',', [Role::ADMIN, Role::AUTHOR])]);
 
+Route::post('/posts/{post}/likes', [PostController::class, 'like'])->name('posts.like');
+
+Route::delete('/posts/{post}/likes}', [PostsController::class, 'unlike'])->name('posts.unlike');
+
 // Places
 
 Route::resource('places', PlaceController::class)
@@ -68,3 +72,5 @@ Route::resource('places', PlaceController::class)
 
 Route::get('places/{place}/delete', [PlaceController::class, 'delete'])->name('places.delete')
     ->middleware(['auth', 'role.any:' . implode(',', [Role::ADMIN, Role::AUTHOR])]);
+
+

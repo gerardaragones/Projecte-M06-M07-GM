@@ -195,4 +195,30 @@ class PostController extends Controller
             'post' => $post
         ]);
     }
+
+        /**
+     * Like the specified post.
+     *
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function like(Post $post)
+    {
+        $like = new Like(['user_id' => auth()->user()->id]);
+        $post->likes()->save($like);
+
+        return response()->json(['message' => 'Post liked successfully']);
+    }
+    /**
+     * Unlike the specified post.
+     *
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function unlike(Post $post)
+    {
+        $post->likes()->where('user_id', auth()->user()->id)->delete();
+
+        return response()->json(['message' => 'Post unliked successfully']);
+    }
 }
