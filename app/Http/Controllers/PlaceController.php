@@ -202,4 +202,20 @@ class PlaceController extends Controller
             'place' => $place
         ]);
     }
+
+    public function addToFavorites(Place $place)
+    {
+        // Lógica para agregar a favoritos el lugar $place
+        auth()->user()->favorites()->attach($place->id);
+
+        return back(); // Redirigir a la vista anterior
+    }
+
+    public function removeFromFavorites(Place $place)
+    {
+        // Lógica para eliminar de favoritos el lugar $place
+        auth()->user()->favorites()->detach($place->id);
+
+        return back(); // Redirigir a la vista anterior
+    }
 }
