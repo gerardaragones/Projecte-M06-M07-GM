@@ -9,9 +9,7 @@ class Place extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['filepath', 'filesize'];
-
-    protected $casts = [
+    protected $fillable = [
         'name',
         'description',
         'file_id',
@@ -19,4 +17,13 @@ class Place extends Model
         'longitude',
         'author_id',
     ];
+    public function file()
+    {
+        return $this->belongsTo(File::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
 }
