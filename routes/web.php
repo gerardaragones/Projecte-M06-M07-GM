@@ -70,6 +70,6 @@ Route::get('places/{place}/delete', [PlaceController::class, 'delete'])->name('p
     ->middleware(['auth', 'role.any:' . implode(',', [Role::ADMIN, Role::AUTHOR])]);
 
 Route::middleware('auth')->group(function () {
-    Route::post('places/{place}/favorite', PlacesController::class, 'favorite')->name('places.favorite');
-    Route::delete('places/{place}/unfavorite', PlacesController::class, 'unfavorite')->name('places.unfavorite');
+    Route::post('places/{place}/favorite', PlaceController::class, 'favorite')->name('places.favorite');
+    Route::delete('places/{place}/unfavorite', PlaceController::class, 'unfavorite')->name('places.unfavorite');
 });

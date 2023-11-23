@@ -19,4 +19,10 @@ class Place extends Model
         'longitude',
         'author_id',
     ];
+
+    public function favorited() 
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
+    
 }
