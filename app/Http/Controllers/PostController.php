@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $collectionQuery = Post::orderBy('created_date', 'desc');
+        $collectionQuery = Post::orderBy('created_at', 'desc');
 
         // Filter?
         if ($search = $request->get('search')) {

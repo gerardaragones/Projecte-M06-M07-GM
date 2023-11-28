@@ -69,7 +69,5 @@ Route::resource('places', PlaceController::class)
 Route::get('places/{place}/delete', [PlaceController::class, 'delete'])->name('places.delete')
     ->middleware(['auth', 'role.any:' . implode(',', [Role::ADMIN, Role::AUTHOR])]);
 
-Route::middleware('auth')->group(function () {
-    Route::post('places/{place}/favorite', PlaceController::class, 'favorite')->name('places.favorite');
-    Route::delete('places/{place}/unfavorite', PlaceController::class, 'unfavorite')->name('places.unfavorite');
-});
+Route::post('places/{place}/favorite', [PlaceController::class, 'favorite'])->name('places.favorite');
+Route::delete('places/{place}/unfavorite', [PlaceController::class, 'unfavorite'])->name('places.unfavorite');

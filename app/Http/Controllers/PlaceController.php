@@ -19,7 +19,7 @@ class PlaceController extends Controller
      */
     public function index(Request $request)
     {
-        $collectionQuery = Place::orderBy('created_date', 'desc');
+        $collectionQuery = Place::orderBy('created_at', 'desc');
 
         // Filter?
         if ($search = $request->get('search')) {
@@ -203,19 +203,18 @@ class PlaceController extends Controller
         ]);
     }
 
-    public function addToFavorites(Place $place)
+    public function favorite(Place $place)
     {
-        // Lógica para agregar a favoritos el lugar $place
-        auth()->user()->favorites()->attach($place->id);
+        $fav = new Favorite(['user_id' => auth()->user()->id]);
+        $place->favorites()->save($fav);
 
-        return back(); // Redirigir a la vista anterior
+        return response()->json(['message' => 'Place favorito exitosamente']);
     }
 
-    public function removeFromFavorites(Place $place)
+    public function unfavorite(Place $place)
     {
-        // Lógica para eliminar de favoritos el lugar $place
-        auth()->user()->favorites()->detach($place->id);
+        $place->favorites()->where('user_id', auth()->user()->id)->delete();
 
-        return back(); // Redirigir a la vista anterior
+        return response()->json(['message' => 'Place quitado de favorito exitosamente']);
     }
 }
