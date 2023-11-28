@@ -17,13 +17,4 @@ class Place extends Model
         'longitude',
         'author_id',
     ];
-    public function file()
-    {
-        return $this->belongsTo(File::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'author_id');
-    }
 }

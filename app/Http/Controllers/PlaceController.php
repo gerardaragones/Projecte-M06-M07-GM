@@ -202,4 +202,19 @@ class PlaceController extends Controller
             'place' => $place
         ]);
     }
+
+    public function favorite(Place $place)
+    {
+        $fav = new Favorite(['user_id' => auth()->user()->id]);
+        $place->favorites()->save($fav);
+
+        return response()->json(['message' => 'Place favorito exitosamente']);
+    }
+
+    public function unfavorite(Place $place)
+    {
+        $place->favorites()->where('user_id', auth()->user()->id)->delete();
+
+        return response()->json(['message' => 'Place quitado de favorito exitosamente']);
+    }
 }
