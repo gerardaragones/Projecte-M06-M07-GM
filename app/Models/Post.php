@@ -17,6 +17,9 @@ class Post extends Model
         'author_id',
 
     ];
+
+    protected $dates = ['created_at', 'updated_at'];
+
     public function file()
     {
         return $this->belongsTo(File::class);
@@ -31,6 +34,6 @@ class Post extends Model
     }
     public function liked()
     {
-    return $this->belongsToMany(User::class, 'likes');
+        return $this->belongsToMany(User::class, 'likes');
     }
 }

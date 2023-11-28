@@ -19,7 +19,7 @@ class PlaceController extends Controller
      */
     public function index(Request $request)
     {
-        $collectionQuery = Place::orderBy('created_date', 'desc');
+        $collectionQuery = Place::orderBy('created_at', 'desc');
 
         // Filter?
         if ($search = $request->get('search')) {
