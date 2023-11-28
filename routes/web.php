@@ -63,7 +63,7 @@ Route::get('posts/{post}/delete', [PostController::class, 'delete'])->name('post
 
 Route::post('/posts/{post}/likes', [PostController::class, 'like'])->name('posts.like');
 
-Route::delete('/posts/{post}/likes}', [PostsController::class, 'unlike'])->name('posts.unlike');
+Route::delete('/posts/{post}/likes}', [PostController::class, 'unlike'])->name('posts.unlike');
 
 // Places
 

@@ -6,27 +6,23 @@ use App\Models\Post;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Like; 
 
 class PostController extends Controller
 {
     private bool $_pagination = true;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
-        $collectionQuery = Post::orderBy('created_at', 'desc');
+        $collectionQuery = Post::orderBy('created_date', 'desc');
 
         // Filter?
         if ($search = $request->get('search')) {
             $collectionQuery->where('body', 'like', "%{$search}%");
         }
         
-        // Pagination
+        // Paginación
         $posts = $this->_pagination 
             ? $collectionQuery->paginate(5)->withQueryString() 
             : $collectionQuery->get();
@@ -37,25 +33,13 @@ class PostController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     { 
         return view("posts.create");  
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        // Validar dades del formulari
         $validatedData = $request->validate([
             'body'      => 'required',
             'upload'    => 'required|mimes:gif,jpeg,jpg,png,mp4|max:2048',
@@ -63,19 +47,16 @@ class PostController extends Controller
             'longitude' => 'required',
         ]);
         
-        // Obtenir dades del formulari
-        $body          = $request->get('body');
-        $upload        = $request->file('upload');
-        $latitude      = $request->get('latitude');
-        $longitude     = $request->get('longitude');
+        $body      = $request->get('body');
+        $upload    = $request->file('upload');
+        $latitude  = $request->get('latitude');
+        $longitude = $request->get('longitude');
 
-        // Desar fitxer al disc i inserir dades a BD
         $file = new File();
         $fileOk = $file->diskSave($upload);
 
         if ($fileOk) {
-            // Desar dades a BD
-            Log::debug("Saving post at DB...");
+            Log::debug("Guardando post en la BD...");
             $post = Post::create([
                 'body'      => $body,
                 'file_id'   => $file->id,
@@ -83,38 +64,32 @@ class PostController extends Controller
                 'longitude' => $longitude,
                 'author_id' => auth()->user()->id,
             ]);
-            Log::debug("DB storage OK");
-            // Patró PRG amb missatge d'èxit
+            Log::debug("Almacenamiento en la BD OK");
             return redirect()->route('posts.show', $post)
-                ->with('success', __('Post successfully saved'));
+                ->with('success', __('Post guardado exitosamente'));
         } else {
-            // Patró PRG amb missatge d'error
             return redirect()->route("posts.create")
-                ->with('error', __('ERROR Uploading file'));
+                ->with('error', __('ERROR al subir el archivo'));
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function show(Post $post)
     {
+        $user = Auth::user();
+        $post->loadCount('liked');
+    
+        // Obtener la lista de usuarios que han dado like al post
+        $usersWhoLiked = $post->liked;
+    
         return view("posts.show", [
-            'post'   => $post,
-            'file'   => $post->file,
-            'author' => $post->user,
-        ]);
-    }
+            'post'          => $post,
+            'file'          => $post->file,
+            'author'        => $post->user,
+            'userLikedPost' => $user && $usersWhoLiked->contains('id', $user->id),
+            'usersWhoLiked' => $usersWhoLiked,
+        ]);       
+    }       
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Post $post)
     {
         return view("posts.edit", [
@@ -124,16 +99,8 @@ class PostController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Post $post)
     {
-        // Validar dades del formulari
         $validatedData = $request->validate([
             'body'      => 'required',
             'upload'    => 'nullable|mimes:gif,jpeg,jpg,png,mp4|max:2048',
@@ -141,54 +108,34 @@ class PostController extends Controller
             'longitude' => 'required',
         ]);
 
-        // Obtenir dades del formulari
         $body      = $request->get('body');
         $upload    = $request->file('upload');
         $latitude  = $request->get('latitude');
         $longitude = $request->get('longitude');
 
-        // Desar fitxer (opcional)
         if (is_null($upload) || $post->file->diskSave($upload)) {
-            // Actualitzar dades a BD
-            Log::debug("Updating DB...");
+            Log::debug("Actualizando la BD...");
             $post->body      = $body;
             $post->latitude  = $latitude;
             $post->longitude = $longitude;
             $post->save();
-            Log::debug("DB storage OK");
-            // Patró PRG amb missatge d'èxit
+            Log::debug("Almacenamiento en la BD OK");
             return redirect()->route('posts.show', $post)
-                ->with('success', __('Post successfully saved'));
+                ->with('success', __('Post guardado exitosamente'));
         } else {
-            // Patró PRG amb missatge d'error
             return redirect()->route("posts.edit")
-                ->with('error', __('ERROR Uploading file'));
+                ->with('error', __('ERROR al subir el archivo'));
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Post $post)
     {
-        // Eliminar post de BD
         $post->delete();
-        // Eliminar fitxer associat del disc i BD
         $post->file->diskDelete();
-        // Patró PRG amb missatge d'èxit
         return redirect()->route("posts.index")
-            ->with('success', __('Post successfully deleted'));
+            ->with('success', __('Post eliminado exitosamente'));
     }
 
-    /**
-     * Confirm specified resource deletion from storage.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function delete(Post $post)
     {
         return view("posts.delete", [
@@ -196,29 +143,44 @@ class PostController extends Controller
         ]);
     }
 
-        /**
-     * Like the specified post.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function like(Post $post)
     {
-        $like = new Like(['user_id' => auth()->user()->id]);
-        $post->likes()->save($like);
+        if (auth()->check()) {
+            $existingLike = Like::where('user_id', auth()->user()->id)
+                                ->where('post_id', $post->id)
+                                ->first();
 
-        return response()->json(['message' => 'Post liked successfully']);
+            if (!$existingLike) {
+                Like::create([
+                    'user_id' => auth()->user()->id,
+                    'post_id' => $post->id,
+                ]);
+                return redirect()->route('posts.show', $post)
+                    ->with('success', __('Post liked successfully'));            }
+            else {
+                return response()->json(['error' => 'User already liked the post.'], 400);
+            }
+        } else {
+            return response()->json(['error' => 'Unauthorized. Please log in.'], 401);
+        }
     }
-    /**
-     * Unlike the specified post.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
+
     public function unlike(Post $post)
     {
-        $post->likes()->where('user_id', auth()->user()->id)->delete();
+        if (auth()->check()) {
+            $like = Like::where('user_id', auth()->user()->id)
+                        ->where('post_id', $post->id)
+                        ->first();
 
-        return response()->json(['message' => 'Post unliked successfully']);
+            if ($like) {
+                $like->delete();
+                return redirect()->route('posts.show', $post)
+                    ->with('success', __('Post unliked successfully'));            }
+            else {
+                return response()->json(['error' => 'User did not like the post.'], 400);
+            }
+        } else {
+            return response()->json(['error' => 'Unauthorized. Please log in.'], 401);
+        }
     }
 }
