@@ -15,9 +15,9 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $collectionQuery = Post::orderBy('created_date', 'desc');
-
-        // Filter?
+        $collectionQuery = Post::withCount('liked')->orderBy('created_at', 'desc');
+    
+        // ¿Filtrar?
         if ($search = $request->get('search')) {
             $collectionQuery->where('body', 'like', "%{$search}%");
         }
