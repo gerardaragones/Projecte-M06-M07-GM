@@ -1,8 +1,8 @@
-@extends('layouts.box-app')
+<x-geomir-layout>
 
-@section('box-title')
+<x-slot:header>
     {{ __('Places') }}
-@endsection
+</x-slot>
 
 @php
     $cols = [
@@ -17,7 +17,7 @@
     ];
 @endphp
 
-@section('box-content')
+
     <!-- Results -->
     <x-table-index :cols=$cols :rows=$places 
         :enableActions=true parentRoute='places'
@@ -35,4 +35,4 @@
             {{ __('Back to dashboard') }}
         </x-secondary-button>
     </div>
-@endsection
+</x-geomir-layout>

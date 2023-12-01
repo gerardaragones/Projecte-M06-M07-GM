@@ -9,7 +9,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
-
+use App\Http\Controllers\HomeController;
 use App\Models\Role;
 
 /*
@@ -71,3 +71,4 @@ Route::get('places/{place}/delete', [PlaceController::class, 'delete'])->name('p
 
 Route::post('places/{place}/favorite', [PlaceController::class, 'favorite'])->name('places.favorite');
 Route::delete('places/{place}/unfavorite', [PlaceController::class, 'unfavorite'])->name('places.unfavorite');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
