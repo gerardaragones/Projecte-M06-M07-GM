@@ -16,7 +16,7 @@ class User extends Authenticatable implements FilamentUser
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var array<int, ,string>
      */
     protected $fillable = [
         'name',
@@ -46,7 +46,14 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessFilament() : bool
     {
-        return true; /* TODO Check user role! */
+        if ($this->role_id === 2 || $this->role_id === 3) {
+            return true;
+        } else{
+            return false;
+        }
     }
- 
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    } 
 }
