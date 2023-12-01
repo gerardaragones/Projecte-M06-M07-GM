@@ -17,17 +17,22 @@ class FileResource extends Resource
 {
     protected static ?string $model = File::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('filepath')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('filesize')
-                    ->required(),
+                ->required()
+                ->image()
+                ->maxSize(2048)
+                ->directory('uploads')
+                ->getUploadedFileNameForStorageUsing(function (Livewire\TemporaryUploadedFile $file): string {
+                    return time() . '_' . $file->getClientOriginalName();
+                }),             
+                //Forms\Components\TextInput::make('filesize')
+                //    ->required(),
             ]);
     }
 
@@ -42,12 +47,13 @@ class FileResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
-            ->filters([
+            ->filters([ 
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
