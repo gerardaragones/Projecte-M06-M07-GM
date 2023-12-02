@@ -23,7 +23,7 @@ class FileResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('filepath')
+                Forms\Components\FileUpload::make('filepath')
                 ->required()
                 ->image()
                 ->maxSize(2048)

@@ -12,6 +12,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PostResource\Pages\Log;
 use Filament\Forms\Components\RichEditor;
 
 class PostResource extends Resource
@@ -30,7 +31,7 @@ class PostResource extends Resource
                     ->relationship('file')
                     ->saveRelationshipsWhenHidden()
                     ->schema([
-                        Forms\Components\TextInput::make('filepath')
+                        Forms\Components\FileUpload::make('filepath')
                         ->required()
                         ->image()
                         ->maxSize(2048)
