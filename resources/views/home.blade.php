@@ -15,8 +15,20 @@
 
   .header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding: 20px;
     background-color: #FFF7E7;
+  }
+
+  .menu button {
+    padding: 10px 20px;
+    margin-left: 10px; /* Espacio entre los botones */
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db; /* Cambia el color de fondo según tu diseño */
+    color: white;
+    cursor: pointer;
   }
 
   .footer {
@@ -46,9 +58,11 @@
 <div class="app-container">
   <div class="header">
     <img class="logob" src="{{ asset("img/Logo-Marron.png") }}" alt="Logo">
-    <button>FILES</button>
-    <button>POSTS</button>
-    <button>PLACES</button>
+    <nav class="menu">
+      <button>🗄️ FILES</button>
+      <button>📑 POSTS</button>
+      <button>📍 PLACES</button>
+    </nav>
   </div>
 
   <div class="main-content">
