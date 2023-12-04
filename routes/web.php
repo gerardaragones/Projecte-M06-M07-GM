@@ -48,26 +48,30 @@ Route::get('mail/test', [MailController::class, 'test']);
 // Files
 
 Route::resource('files', FileController::class)
-    ->middleware(['auth', 'role:' . Role::ADMIN]);
+    ->middleware('auth');
 
 Route::get('files/{file}/delete', [FileController::class, 'delete'])->name('files.delete')
-    ->middleware(['auth', 'role:' . Role::ADMIN]);
+    ->middleware('auth');
 
 // Posts
 
 Route::resource('posts', PostController::class)
-    ->middleware(['auth', 'role.any:' . implode(',', [Role::ADMIN, Role::AUTHOR])]);
+    ->middleware('auth');
 
 Route::get('posts/{post}/delete', [PostController::class, 'delete'])->name('posts.delete')
-    ->middleware(['auth', 'role.any:' . implode(',', [Role::ADMIN, Role::AUTHOR])]);
+    ->middleware('auth');
+
+Route::post('/posts/{post}/likes', [PostController::class, 'like'])->name('posts.like');
+
+Route::delete('/posts/{post}/likes}', [PostController::class, 'unlike'])->name('posts.unlike');
 
 // Places
 
 Route::resource('places', PlaceController::class)
-    ->middleware(['auth', 'role.any:' . implode(',', [Role::ADMIN, Role::AUTHOR])]);
+    ->middleware('auth');
 
 Route::get('places/{place}/delete', [PlaceController::class, 'delete'])->name('places.delete')
-    ->middleware(['auth', 'role.any:' . implode(',', [Role::ADMIN, Role::AUTHOR])]);
+    ->middleware('auth');
 
 Route::post('places/{place}/favorite', [PlaceController::class, 'favorite'])->name('places.favorite');
 Route::delete('places/{place}/unfavorite', [PlaceController::class, 'unfavorite'])->name('places.unfavorite');

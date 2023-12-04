@@ -7,15 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var array<int, ,string>
      */
     protected $fillable = [
         'name',
@@ -43,9 +44,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function favorites()
+    public function canAccessFilament() : bool
     {
-    return $this->belongsToMany(Place::class, 'favorites');
+        if ($this->role_id === 2 || $this->role_id === 3) {
+            return true;
+        } else{
+            return false;
+        }
     }
-
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    } 
 }
