@@ -13,6 +13,11 @@ class PostController extends Controller
 {
     private bool $_pagination = true;
 
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
     public function index(Request $request)
     {
         $collectionQuery = Post::withCount('liked')->orderBy('created_at', 'desc');
