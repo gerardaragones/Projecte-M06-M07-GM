@@ -37,8 +37,11 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return $user->role_id == 1 && $user->id === $post->author_id;
-    }
+        if ($user->role_id == 1 && $user->id === $post->author_id) {
+            return true;
+        }
+    
+        return false;    }
 
     /**
      * Determine whether the user can delete the model.
