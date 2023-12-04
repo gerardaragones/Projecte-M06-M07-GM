@@ -9,23 +9,30 @@
 
 </head>
 <body>
-<div class="app-container">
-  <div class="header">
-    <img class="logob" src="{{ asset("img/Logo-Marron.png") }}" alt="Logo">
-    <h1>GeoMir</h1>
-    <nav class="menu">
-      <button>🗄️ FILES</button>
-      <button>📑 POSTS</button>
-      <button>📍 PLACES</button>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Acerca de</a></li>
+            <li><a href="#">Servicios</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
     </nav>
-  </div>
+</header>
 
-  <div class="main-content">
-    <!-- Main content goes here -->
-  </div>
+<main>
+    <section class="hero">
+        <h1>Bienvenido a nuestra página</h1>
+        <p>Descripción breve de tu sitio</p>
+        <a href="#" class="btn">Ver más</a>
+    </section>
+</main>
 
-  <div class="footer">
-  </div>
-</div>
+<footer>
+    <p>&copy; 2023 TuEmpresa. Todos los derechos reservados.</p>
+</footer>
+
 </body>
+
 </x-geomir-layout>

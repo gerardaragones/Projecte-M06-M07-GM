@@ -1,60 +1,71 @@
-body, html {
-    height: 100%;
-    font-family: Arial, sans-serif;
-  }
-
-.logob {
-    height: 10vw;
+/* Reset de estilos */
+body, h1, p, ul, li {
+    margin: 0;
+    padding: 0;
 }
 
-.header {
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    overflow: hidden; /* Evita el scroll */
+}
+
+/* Estilos para el header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Estilos para el main */
+main {
+    background-image: linear-gradient(to bottom, #ff9900, #ff0000);
+    min-height: calc(100vh - 70px); /* Altura del viewport menos la altura del header */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #FFF7E7;
+    overflow-y: auto; /* Habilita scroll si el contenido excede el tamaño */
+}
+
+/* Estilos para la sección hero */
+.hero {
     text-align: center;
+    padding: 100px 20px;
+    color: #fff;
 }
 
-.header h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 2%;
-    color: #433528;
-}
-
-.menu {
-    display: flex;
-    justify-content: center;
-}
-
-.menu button {
-    padding: 10px 20px;
-    margin: 0 5px; /* Espacio entre los botones */
-    border: none;
-    border-radius: 5px;
-    background-color: #664D38;
-    color: white;
-    cursor: pointer;
-}
-
-.footer {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
-    background-color: #FFF7E7;
-}
-
-.footer button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
+/* Estilos para el botón */
+.btn {
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #eee;
+}
+
+/* Estilos para el footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
 }
