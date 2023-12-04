@@ -7,6 +7,7 @@
 <!-- Enlace al archivo CSS -->
 <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
+
 </head>
 <body>
 
@@ -23,15 +24,12 @@
 
 <main>
     <section class="hero">
-        <h1>Bienvenido a nuestra página</h1>
-        <p>Descripción breve de tu sitio</p>
-        <a href="#" class="btn">Ver más</a>
+      <img src="{{ asset("img/Logo-Marron.png") }}" alt="Logo">
+      <h1>Bienvenido a nuestra página</h1>
+      <p>Descripción breve de tu sitio</p>
+      <a href="#" class="btn">Ver más</a>
     </section>
 </main>
-
-<footer>
-    <p>&copy; 2023 TuEmpresa. Todos los derechos reservados.</p>
-</footer>
 
 </body>
 

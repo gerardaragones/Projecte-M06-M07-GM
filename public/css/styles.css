@@ -12,7 +12,7 @@ body {
 
 /* Estilos para el header */
 header {
-    background-color: #333;
+    background-color: #433528;
     color: #fff;
     padding: 20px;
 }
@@ -29,11 +29,16 @@ nav ul li {
 nav ul li a {
     color: #fff;
     text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #dab284; /* Color al hacer hover */
 }
 
 /* Estilos para el main */
 main {
-    background-image: linear-gradient(to bottom, #ff9900, #ff0000);
+    background-image: linear-gradient(to bottom, #433528, #664d38);
     min-height: calc(100vh - 70px); /* Altura del viewport menos la altura del header */
     display: flex;
     flex-direction: column;
@@ -45,6 +50,19 @@ main {
     text-align: center;
     padding: 100px 20px;
     color: #fff;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.hero img {
+    display: block;
+    margin: 0 auto 20px; /* Centrar la imagen y añadir espacio hacia abajo */
+    max-width: 20%; /* Ajusta el ancho máximo de la imagen al 80% del contenedor */
+    height: auto;
+}
+
+.hero .btn {
+    margin-top: 20px; /* Añadir margen hacia abajo al botón */
 }
 
 /* Estilos para el botón */
@@ -55,17 +73,10 @@ main {
     color: #333;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn:hover {
-    background-color: #eee;
-}
-
-/* Estilos para el footer */
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
+    background-color: #dab284;
+    color: #433528;
 }
