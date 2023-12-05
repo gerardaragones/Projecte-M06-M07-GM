@@ -5,5 +5,10 @@
 @endsection
 
 @section('box-content')
-    <x-confirm-delete-form parentRoute='places' :model=$place />
+    @can('delete', App\Models\Places::class)
+        <x-confirm-delete-form parentRoute='places' :model=$place />
+    @endcan
+    @can('forceDelete', App\Models\Places::class)
+        <x-confirm-delete-form parentRoute='places' :model=$place />
+    @endcan
 @endsection

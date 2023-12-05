@@ -28,11 +28,13 @@
     </div>
     <!-- Buttons -->
     <div class="mt-8">
-        <x-primary-button href="{{ route('places.create') }}">
-            {{ __('Add new place') }}
-        </x-primary-button>
-        <x-secondary-button href="{{ route('dashboard') }}">
-            {{ __('Back to dashboard') }}
-        </x-secondary-button>
+        @can('create', App\Models\Places::class)
+            <x-primary-button href="{{ route('places.create') }}">
+                {{ __('Add new place') }}
+            </x-primary-button>
+        @endcan
+            <x-secondary-button href="{{ route('dashboard') }}">
+                {{ __('Back to dashboard') }}
+            </x-secondary-button>
     </div>
 </x-geomir-layout>
