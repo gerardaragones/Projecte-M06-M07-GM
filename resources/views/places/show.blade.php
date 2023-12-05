@@ -67,15 +67,16 @@
             </tbody>
         </table>
         <div class="mt-8">
-            <x-primary-button href="{{ route('places.edit', $place) }}">
-                {{ __('Edit') }}
-            </x-danger-button>
-            <x-danger-button href="{{ route('places.delete', $place) }}">
-                {{ __('Delete') }}
-            </x-danger-button>
-            <x-secondary-button href="{{ route('places.index') }}">
-                {{ __('Back to list') }}
-            </x-secondary-button>
+            @can('update', $place)
+                <x-primary-button href="{{ route('places.edit', $place) }}">
+                    {{ __('Edit') }}
+                </x-danger-button>
+            @endcan
+            @can('delete', $place)
+                <x-danger-button href="{{ route('places.delete', $place) }}">
+                    {{ __('Delete') }}
+                </x-danger-button>
+            @endcan
         </div>
     @endsection
 </x-columns>

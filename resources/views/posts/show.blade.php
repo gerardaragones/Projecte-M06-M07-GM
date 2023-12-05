@@ -65,20 +65,14 @@
                     </tbody>
                 </table>
                 <div class="mt-8">
-                    @can('update', App\Models\Post::class)
+                    @can('update', $post)
                         <x-primary-button href="{{ route('posts.edit', $post) }}">
                             {{ __('Edit') }}
                         </x-danger-button>
                     @endcan
-                    @can('delete', App\Models\Post::class)
+                    @can('delete', $post)
                         <x-confirm-delete-form parentRoute='posts' :model=$post />
                     @endcan
-                    @can('forceDelete', App\Models\Post::class)
-                        <x-confirm-delete-form parentRoute='posts' :model=$post />
-                    @endcan
-                    <x-secondary-button href="{{ route('posts.index') }}">
-                        {{ __('Back to list') }}
-                    </x-secondary-button>
                 </div>
             @endsection
         </x-columns>

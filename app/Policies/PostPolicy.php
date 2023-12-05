@@ -46,23 +46,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return $user->role_id == 1 && $user->id === $post->author_id;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Post $post): bool
-    {
-        return $user->role_id == 1 && $user->id === $post->author_id;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Post $post): bool
-    {
-        return $user->role_id == 2;
+        return $user->role_id == 1 && $user->id === $post->author_id || $user->role_id == 2;
     }
 
     public function like (User $user): bool
