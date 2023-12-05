@@ -97,17 +97,19 @@
     <h1>Nuestro Equipo</h1>
 
     <div class="team-member-1">
-        <img src="{{ asset("img/MarianoSerious.jpg") }}">
-        <p>Gerard Aragones Cidoncha<br>Borderline</p>
+        <img src="{{ asset("img/MarianoSerious.jpg") }}" data-video-id="0EfJJM5J-2M">
+        <p id="member-1-description">Gerard Aragones Cidoncha<br>Developer</p>
     </div>
 
     <div class="team-member-2">
-        <img src="{{ asset("img/LuffySerious.jpg") }}">
-        <p>Marc Lorenzo Oltra<br>...</p>
+        <img src="{{ asset("img/LuffySerious.jpg") }}" data-video-id="vVT2MUHRe_k">
+        <p id="member-2-description">Marc Lorenzo Oltra<br>Developer</p>
     </div>
 
     <script>
+        // Código para cambio de imágenes y eventos mouseover/mouseout (ya existente)
         const images = document.querySelectorAll('img');
+        const audioElement = new Audio("{{ asset('mp3/Mariano.mp3') }}");
 
         images.forEach(image => {
             const originalSrc = image.src;
@@ -115,10 +117,42 @@
 
             image.addEventListener('mouseover', function() {
                 this.src = hoverSrc;
+                audioElement.play();
             });
 
             image.addEventListener('mouseout', function() {
                 this.src = originalSrc;
+                audioElement.pause();
+                audioElement.currentTime = 0;
+            });
+
+            // Agregar evento de clic para abrir el pop-up con el video de YouTube
+            image.addEventListener('click', function() {
+                const videoId = this.dataset.videoId; // Obtener el ID del video de YouTube desde el atributo data-video-id de la imagen
+
+                const popupWidth = 560; // Ancho del video de YouTube
+                const popupHeight = 315; // Alto del video de YouTube
+
+                const leftPosition = window.screen.width / 2 - popupWidth / 2;
+                const topPosition = window.screen.height / 2 - popupHeight / 2;
+
+                const videoPopup = window.open(
+                    '',
+                    'videoPopup',
+                    `width=${popupWidth},height=${popupHeight},left=${leftPosition},top=${topPosition}`
+                );
+
+                videoPopup.document.body.innerHTML = `
+                    <div style="position: relative;">
+                        <button style="position: absolute; top: 5px; right: 5px; padding: 5px 10px; cursor: pointer;" onclick="window.close()">Close</button>
+                        <iframe
+                            src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+                            frameborder="0"
+                            allowfullscreen
+                            style="width: 100%; height: calc(100% - 40px);"
+                        ></iframe>
+                    </div>
+                `;
             });
         });
 

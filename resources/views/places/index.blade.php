@@ -1,4 +1,4 @@
-@extends('layouts.geomir')
+@extends('layouts.box-app')
 
 @section('header-content')
     @include('layouts.navigation')

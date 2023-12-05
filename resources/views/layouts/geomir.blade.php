@@ -23,8 +23,24 @@
             <script type="module" src="{{ asset('build/'.$manifest['resources/js/app.js']['file']) }}"></script>
         @endenv
     </head>
-    <body class="font-sans antialiased bg-gray-200 text-gray-800"> <!-- Cambia los colores de fondo y texto aquí -->
-        @yield('header-content')
-        @yield('box-content')
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-[#FFF7E7] dark:bg-[#FFF7E7]">
+            @include('layouts.navigation')
+
+            <!-- Page Heading -->
+            @if (isset($header))
+                <header class="bg-[#FFF7E7]">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endif
+
+            <!-- Page Content -->
+            <main>
+                @include('partials.flash')
+                {{ $slot }}
+            </main>
+        </div>
     </body>
 </html>
