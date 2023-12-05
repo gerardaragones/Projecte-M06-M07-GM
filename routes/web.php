@@ -77,10 +77,7 @@ Route::get('places/{place}/delete', [PlaceController::class, 'delete'])->name('p
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::post('places/favorite/{id}', [FavoriteController::class, 'favorite'])->name('places.favorite');
-Route::delete('places/favorite/{id}', [FavoriteController::class, 'unfavorite'])->name('places.unfavorite');
+Route::post('places/{place}/favorite', [PlaceController::class, 'favorite'])->name('places.favorite');
+Route::delete('places/{place}/favorite', [PlaceController::class, 'unfavorite'])->name('places.unfavorite');
 
-/*Per generar rutes CRUD de favorites*/
-//Route::resource('favorites', FavoriteController::class);
-
-Route::get('/about-us', 'AboutUsController@index')->name('about.us');
+Route::get('/about-us', [AboutUsController::class, 'index'])->name('about.us');

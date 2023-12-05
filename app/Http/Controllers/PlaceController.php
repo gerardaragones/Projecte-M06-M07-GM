@@ -6,6 +6,8 @@ use App\Models\Place;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Favorite;
 
 class PlaceController extends Controller
 {
@@ -106,10 +108,18 @@ class PlaceController extends Controller
      */
     public function show(Place $place)
     {
+        $user = Auth::user();
+        $place->loadCount('favorited');
+    
+        // Obtener la lista de usuarios que han dado like al post
+        $usersWhoFavorited = $place->favorited;
+    
         return view("places.show", [
             'place'  => $place,
             'file'   => $place->file,
             'author' => $place->user,
+            'userFavoritedPlace' => $user && $usersWhoFavorited->contains('id', $user->id),
+            'usersWhoFavorited' => $usersWhoFavorited,
         ]);
     }
 
@@ -203,18 +213,59 @@ class PlaceController extends Controller
         ]);
     }
 
+    // public function favorite(Place $place)
+    // {
+    //     $fav = new Favorite(['user_id' => auth()->user()->id]);
+    //     $place->favorites()->save($fav);
+
+    //     return response()->json(['message' => 'Place favorito exitosamente']);
+    // }
+
+    // public function unfavorite(Place $place)
+    // {
+    //     $place->favorites()->where('user_id', auth()->user()->id)->delete();
+
+    //     return response()->json(['message' => 'Place quitado de favorito exitosamente']);
+    // }
+
     public function favorite(Place $place)
     {
-        $fav = new Favorite(['user_id' => auth()->user()->id]);
-        $place->favorites()->save($fav);
+        if (auth()->check()) {
+            $existingFavorite = Favorite::where('user_id', auth()->user()->id)
+                                ->where('place_id', $place->id)
+                                ->first();
 
-        return response()->json(['message' => 'Place favorito exitosamente']);
+            if (!$existingFavorite) {
+                Favorite::create([
+                    'user_id' => auth()->user()->id,
+                    'place_id' => $place->id,
+                ]);
+                return redirect()->route('places.show', $place)
+                    ->with('success', __('Place favorited successfully'));            }
+            else {
+                return response()->json(['error' => 'User already favorited the place.'], 400);
+            }
+        } else {
+            return response()->json(['error' => 'Unauthorized. Please log in.'], 401);
+        }
     }
 
     public function unfavorite(Place $place)
     {
-        $place->favorites()->where('user_id', auth()->user()->id)->delete();
+        if (auth()->check()) {
+            $favorite = Favorite::where('user_id', auth()->user()->id)
+                        ->where('place_id', $place->id)
+                        ->first();
 
-        return response()->json(['message' => 'Place quitado de favorito exitosamente']);
+            if ($favorite) {
+                $favorite->delete();
+                return redirect()->route('places.show', $place)
+                    ->with('success', __('Place unfavorited successfully'));            }
+            else {
+                return response()->json(['error' => 'User did not favorite the place.'], 400);
+            }
+        } else {
+            return response()->json(['error' => 'Unauthorized. Please log in.'], 401);
+        }
     }
 }

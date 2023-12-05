@@ -56,4 +56,10 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->belongsTo(Role::class);
     } 
+    // User.php
+    public function favorites()
+    {
+    return $this->belongsToMany(Place::class, 'favorites');
+    }
+
 }

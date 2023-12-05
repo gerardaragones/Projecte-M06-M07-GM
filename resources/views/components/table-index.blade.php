@@ -51,8 +51,7 @@
                 <td scope="row" class="px-6 py-4 min-w-[120px]">
                     <a title="{{ __('View') }}"   href="{{ route($parentRoute . '.show',   $row) }}">👁️</a>
                     <a title="{{ __('Edit') }}"   href="{{ route($parentRoute . '.edit',   $row) }}">📝</a>
-                    <a title="{{ __('Delete') }}" href="{{ route($parentRoute . '.delete', $row) }}">🗑️</a>   
-                    <a title="{{ __('Favorite') }}" href="{{ route($parentRoute . '.favorite', $row) }}"> ❤️ </a>
+                    <a title="{{ __('Delete') }}" href="{{ route($parentRoute . '.delete', $row) }}">🗑️</a>
                 @endif
             </tr>
             @endforeach
