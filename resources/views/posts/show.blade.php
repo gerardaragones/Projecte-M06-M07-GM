@@ -46,29 +46,36 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            @if($userLikedPost)
-                                <form action="{{ route('posts.unlike', $post) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="bg-red-500 text-white p-2 rounded">{{ __('Unlike') }}</button>
-                                </form>
-                            @else
-                                <form action="{{ route('posts.like', $post) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="bg-blue-500 text-white p-2 rounded">{{ __('Like') }}</button>
-                                </form>
-                            @endif
+                            @can('like', App\Models\Post::class)
+                                @if($userLikedPost)
+                                    <form action="{{ route('posts.unlike', $post) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-500 text-white p-2 rounded">{{ __('Unlike') }}</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('posts.like', $post) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="bg-blue-500 text-white p-2 rounded">{{ __('Like') }}</button>
+                                    </form>
+                                @endif
+                            @endcan
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="mt-8">
-                <x-primary-button href="{{ route('posts.edit', $post) }}">
-                    {{ __('Edit') }}
-                </x-danger-button>
-                <x-danger-button href="{{ route('posts.delete', $post) }}">
-                    {{ __('Delete') }}
-                </x-danger-button>
+                @can('update', App\Models\Post::class)
+                    <x-primary-button href="{{ route('posts.edit', $post) }}">
+                        {{ __('Edit') }}
+                    </x-danger-button>
+                @endcan
+                @can('delete', App\Models\Post::class)
+                    <x-confirm-delete-form parentRoute='posts' :model=$post />
+                @endcan
+                @can('forceDelete', App\Models\Post::class)
+                    <x-confirm-delete-form parentRoute='posts' :model=$post />
+                @endcan
                 <x-secondary-button href="{{ route('posts.index') }}">
                     {{ __('Back to list') }}
                 </x-secondary-button>

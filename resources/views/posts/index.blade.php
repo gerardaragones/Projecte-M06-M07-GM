@@ -29,9 +29,11 @@
     </div>
     <!-- Buttons -->
     <div class="mt-8">
+    @can('create', App\Models\Post::class)
         <x-primary-button href="{{ route('posts.create') }}">
             {{ __('Add new post') }}
         </x-primary-button>
+    @endcan
         <x-secondary-button href="{{ route('dashboard') }}">
             {{ __('Back to dashboard') }}
         </x-secondary-button>

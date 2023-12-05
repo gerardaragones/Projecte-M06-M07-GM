@@ -66,4 +66,9 @@ class PostPolicy
     {
         return $user->role_id == 2;
     }
+
+    public function like (User $user, Post $post): bool
+    {
+        return $user->role_id == 1;
+    }
 }

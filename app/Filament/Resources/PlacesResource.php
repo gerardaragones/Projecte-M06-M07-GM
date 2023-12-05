@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PostResource\Pages;
-use App\Filament\Resources\PostResource\RelationManagers;
-use App\Models\Post;
+use App\Filament\Resources\PlacesResource\Pages;
+use App\Filament\Resources\PlacesResource\RelationManagers;
+use App\Models\Places;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -12,19 +12,15 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\PostResource\Pages\Log;
-use Filament\Forms\Components\RichEditor;
 
-class PostResource extends Resource
+class PlacesResource extends Resource
 {
-    protected static ?string $model = Post::class;
+    protected static ?string $model = Places::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-camera';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form
     {
-        $authors = \App\Models\User::pluck('name', 'id')->toArray();
-
         return $form
             ->schema([
                 Forms\Components\Fieldset::make('File')
@@ -40,35 +36,22 @@ class PostResource extends Resource
                             return time() . '_' . $file->getClientOriginalName();
                         }),
                     ]),
-                Forms\Components\Fieldset::make('Post')
+                Forms\Components\Fieldset::make('Place')
                     ->schema([
-                        Forms\Components\TextInput::make('file_id')
+                        Forms\Components\Hidden::make('file_id')
                         ->required(),
                         Forms\Components\Select::make('author_id')
                             ->label('Author')
                             ->options($authors)
                             ->default(auth()->id())
                             ->required(),
-                        Forms\Components\RichEditor::make('body')
+                        Forms\Components\TextInput::make('name')
                             ->required()
-                            ->maxLength(255)
-                            ->toolbarButtons([
-                                'attachFiles',
-                                'bold',            'index' => Pages\ManagePosts::route('/'),
-
-                                'italic',
-                                'link',
-                                'orderedList',
-                                'redo',
-                                'underline',
-                                'undo',
-                            ]),
-                        Forms\Components\TextInput::make('latitude')
-                            ->required(),
-                        Forms\Components\TextInput::make('longitude')
-                            ->required(),
+                            ->maxLength(255),
+                        Forms\Components\RichEditor::make('description')
+                            ->required()
+                            ->maxLength(255),
                     ])
-
             ]);
     }
 
@@ -78,9 +61,8 @@ class PostResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('file_id'),
                 Tables\Columns\TextColumn::make('author_id'),
-                Tables\Columns\TextColumn::make('body'),
-                Tables\Columns\TextColumn::make('latitude'),
-                Tables\Columns\TextColumn::make('longitude'),
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
@@ -99,12 +81,21 @@ class PostResource extends Resource
             ]);
     }
     
+    
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+    
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'view' => Pages\ViewPost::route('/{record}'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),        ];
+            'index' => Pages\ListPlaces::route('/'),
+            'create' => Pages\CreatePlaces::route('/create'),
+            'view' => Pages\ViewPlaces::route('/{record}'),
+            'edit' => Pages\EditPlaces::route('/{record}/edit'),
+        ];
     }    
 }
