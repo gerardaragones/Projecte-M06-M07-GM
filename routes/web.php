@@ -75,16 +75,13 @@ Route::resource('places', PlaceController::class)
 Route::get('places/{place}/delete', [PlaceController::class, 'delete'])->name('places.delete')
     ->middleware('auth');
 
-<<<<<<< HEAD
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::post('places/{place}/favorite', [PlaceController::class, 'favorite'])->name('places.favorite');
 Route::delete('places/{place}/favorite', [PlaceController::class, 'unfavorite'])->name('places.unfavorite');
 
 Route::get('/about-us', [AboutUsController::class, 'index'])->name('about.us');
-=======
 
 // Languages
 
 Route::get('/language/{locale}', [LanguageController::class, 'language'])->name('language');
->>>>>>> b0.2-g
