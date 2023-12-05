@@ -44,26 +44,6 @@
                     <td><strong>Updated</strong></td>
                     <td>{{ $place->updated_at }}</td>
                 </tr>
-                <tr>
-                    <td><strong>Favorites</strong></td>
-                    <td>{{ $place->favorited_count }}</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        @if($userFavoritedPlace)
-                            <form action="{{ route('places.unfavorite', $place) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-500 text-white p-2 rounded">{{ __('Unfavorite') }}</button>
-                            </form>
-                        @else
-                            <form action="{{ route('places.favorite', $place) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="bg-blue-500 text-white p-2 rounded">{{ __('Favorite') }}</button>
-                            </form>
-                        @endif
-                    </td>
-                </tr>
             </tbody>
         </table>
         <div class="mt-8">
