@@ -29,11 +29,13 @@ class Place extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    // Place.php
     public function favorited()
     {
     return $this->belongsToMany(User::class, 'favorites');
     }
 
-
+    public function visibilities()
+    {
+        return $this->belongsTo(Visibility::class, 'visibility_id');
+    }
 }

@@ -12,15 +12,17 @@
             <x-text-input type="file" name="upload" id="upload" class="block mt-1 w-full" :value="old('upload')" />
         </div>
         <div class="mt-8">
-            <x-primary-button>
-                {{ __('Create') }}
-            </x-primary-button>
-            <x-secondary-button type="reset">
-                {{ __('Reset') }}
-            </x-secondary-button>
-            <x-secondary-button href="{{ route('files.index') }}">
-                {{ __('Back to list') }}
-            </x-secondary-button>
+            @can('create', App\Models\File::class)
+                <x-primary-button>
+                    {{ __('Create') }}
+                </x-primary-button>
+            @endcan
+                <x-secondary-button type="reset">
+                    {{ __('Reset') }}
+                </x-secondary-button>
+                <x-secondary-button href="{{ route('files.index') }}">
+                    {{ __('Back to list') }}
+                </x-secondary-button>
         </div>
     </form>
 @endsection

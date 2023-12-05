@@ -5,5 +5,7 @@
 @endsection
 
 @section('box-content')
-    <x-confirm-delete-form parentRoute='files' :model=$file />
+    @can('delete', $file)
+        <x-confirm-delete-form parentRoute='files' :model=$file />
+    @endcan
 @endsection

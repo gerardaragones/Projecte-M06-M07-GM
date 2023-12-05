@@ -18,9 +18,11 @@
                 <x-text-input type="file" name="upload" id="upload" class="block mt-1 w-full" />
             </div>
             <div class="mt-8">
-                <x-primary-button>
-                    {{ __('Update') }}
-                </x-primary-button>
+                @can('update', $file)
+                    <x-primary-button>
+                        {{ __('Update') }}
+                    </x-primary-button>
+                @endcan
                 <x-secondary-button type="reset">
                     {{ __('Reset') }}
                 </x-secondary-button>
