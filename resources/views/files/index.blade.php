@@ -17,11 +17,13 @@
 @section('box-content')
     <x-table-index :cols=$cols :rows=$files parentRoute='files' />
     <div class="mt-8">
-        <x-primary-button href="{{ route('files.create') }}">
-            {{ __('Add new file') }}
-        </x-primary-button>
-        <x-secondary-button href="{{ route('dashboard') }}">
-            {{ __('Back to dashboard') }}
-        </x-secondary-button>
+        @can('create', App\Models\File::class)
+            <x-primary-button href="{{ route('files.create') }}">
+                {{ __('Add new file') }}
+            </x-primary-button>
+        @endfile
+            <x-secondary-button href="{{ route('dashboard') }}">
+                {{ __('Back to dashboard') }}
+            </x-secondary-button>
     </div>
 @endsection
