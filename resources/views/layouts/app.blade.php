@@ -41,6 +41,7 @@
                 @include('partials.flash')
                 {{ $slot }}
             </main>
+            <x-language-switcher />
         </div>
     </body>
 </html>
