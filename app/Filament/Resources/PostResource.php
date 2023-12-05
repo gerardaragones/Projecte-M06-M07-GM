@@ -54,7 +54,8 @@ class PostResource extends Resource
                             ->maxLength(255)
                             ->toolbarButtons([
                                 'attachFiles',
-                                'bold',
+                                'bold',            'index' => Pages\ManagePosts::route('/'),
+
                                 'italic',
                                 'link',
                                 'orderedList',
@@ -101,7 +102,9 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManagePosts::route('/'),
-        ];
+            'index' => Pages\ListPosts::route('/'),
+            'create' => Pages\CreatePost::route('/create'),
+            'view' => Pages\ViewPost::route('/{record}'),
+            'edit' => Pages\EditPost::route('/{record}/edit'),        ];
     }    
 }
