@@ -20,9 +20,12 @@
         </x-primary-button>
     @endcan
 
-    @can('viewAny', \App\Models\Place::class)
+    <!-- TODO: Controlar el acceso de usuario -->
+    @can('viewAny', \App\Models\Post::class)
         <x-primary-button href="{{ url('/places') }}">
-            📍 {{ __('Places') }}
+            📍 {{ __('Places') }} 
         </x-primary-button>
     @endcan
+
+    
 @endsection

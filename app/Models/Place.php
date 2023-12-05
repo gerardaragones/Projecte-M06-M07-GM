@@ -16,6 +16,7 @@ class Place extends Model
         'latitude',
         'longitude',
         'author_id',
+        'favorites'
     ];
 
     public function file()
@@ -27,4 +28,5 @@ class Place extends Model
     {
         return $this->belongsTo(User::class, 'author_id');
     }
+
 }

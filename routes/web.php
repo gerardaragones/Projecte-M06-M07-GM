@@ -10,6 +10,8 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\FavoriteController;
 use App\Models\Role;
 
 /*
@@ -73,6 +75,12 @@ Route::resource('places', PlaceController::class)
 Route::get('places/{place}/delete', [PlaceController::class, 'delete'])->name('places.delete')
     ->middleware('auth');
 
-Route::post('places/{place}/favorite', [PlaceController::class, 'favorite'])->name('places.favorite');
-Route::delete('places/{place}/unfavorite', [PlaceController::class, 'unfavorite'])->name('places.unfavorite');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::post('places/favorite/{id}', [FavoriteController::class, 'favorite'])->name('places.favorite');
+Route::delete('places/favorite/{id}', [FavoriteController::class, 'unfavorite'])->name('places.unfavorite');
+
+/*Per generar rutes CRUD de favorites*/
+//Route::resource('favorites', FavoriteController::class);
+
+Route::get('/about-us', 'AboutUsController@index')->name('about.us');
