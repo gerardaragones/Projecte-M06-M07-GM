@@ -34,30 +34,24 @@
     <h1>Nuestro Equipo</h1>
 
     <div class="team-member">
-        <img src="{{ asset("img/MarianoSerious.jpg") }}" alt="Logo" onmouseover="changeImage(this)" onmouseout="changeImageBack(this)">
+        <img src="{{ asset("img/MarianoSerious.jpg") }}" alt="Logo" onmouseover="changeImage(this, '{{ asset("img/MarianoFunny.jpg") }}')" onmouseout="changeImageBack(this, '{{ asset("img/MarianoSerious.jpg") }}')">
         <p>Gerard Aragones Cidoncha<br>Borderline</p>
     </div>
 
     <div class="team-member">
-        <img src="{{ asset("img/MrIncreibleSerious.jpg") }}" alt="Logo" onmouseover="changeImage2(this)" onmouseout="changeImageBack2(this)">
-        <p>Marc Lorenzo Oltra<br>Filantropo, putero, cocainomano...</p>
+        <img src="{{ asset("img/MrIncreibleSerious.jpg") }}" alt="Logo" onmouseover="changeImage(this, '{{ asset("img/MrIncreibleFunny.jpg") }}')" onmouseout="changeImageBack(this, '{{ asset("img/MrIncreibleSerious.jpg") }}')">
+        <p>Marc Lorenzo Oltra<br>Filantropo, putero, cocainómano...</p>
     </div>
 
     <script>
-        function changeImage(element) {
-            element.src = "{{ asset("img/MarianoFunny.jpg") }}"; // Reemplaza con la ruta de la imagen de hover
+        function changeImage(element, newImage) {
+            element.classList.add('hover-effect');
+            element.src = newImage;
         }
 
-        function changeImageBack(element) {
-            element.src = element.getAttribute("src").replace("_hover", ""); // Restaura la imagen original
-        }
-
-        function changeImage2(element) {
-            element.src = "{{ asset("img/MrIncreibleFunny.jpg") }}"; // Reemplaza con la ruta de la imagen de hover
-        }
-
-        function changeImageBack2(element) {
-            element.src = element.getAttribute("src").replace("_hover", ""); // Restaura la imagen original
+        function changeImageBack(element, originalImage) {
+            element.classList.remove('hover-effect');
+            element.src = originalImage;
         }
     </script>
 </body>
