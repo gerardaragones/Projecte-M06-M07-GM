@@ -24,10 +24,12 @@ class PlacesResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Fieldset::make('File')
+                    ->translateLabel()
                     ->relationship('file')
                     ->saveRelationshipsWhenHidden()
                     ->schema([
                         Forms\Components\FileUpload::make('filepath')
+                        ->translateLabel()
                         ->required()
                         ->image()
                         ->maxSize(2048)
@@ -37,18 +39,23 @@ class PlacesResource extends Resource
                         }),
                     ]),
                 Forms\Components\Fieldset::make('Place')
+                    ->translateLabel()
                     ->schema([
                         Forms\Components\Hidden::make('file_id')
+                        ->translateLabel()
                         ->required(),
                         Forms\Components\Select::make('author_id')
+                            ->translateLabel()
                             ->label('Author')
                             ->options($authors)
                             ->default(auth()->id())
                             ->required(),
                         Forms\Components\TextInput::make('name')
+                            ->translateLabel()
                             ->required()
                             ->maxLength(255),
                         Forms\Components\RichEditor::make('description')
+                            ->translateLabel()
                             ->required()
                             ->maxLength(255),
                     ])
@@ -59,25 +66,27 @@ class PlacesResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('file_id'),
-                Tables\Columns\TextColumn::make('author_id'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('file_id')->translateLabel(),
+                Tables\Columns\TextColumn::make('author_id')->translateLabel(),
+                Tables\Columns\TextColumn::make('name')->translateLabel(),
+                Tables\Columns\TextColumn::make('description')->translateLabel(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                ->translateLabel()
+                ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                ->translateLabel()    
+                ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()->translateLabel(),
+                Tables\Actions\EditAction::make()->translateLabel(),
+                Tables\Actions\DeleteAction::make()->translateLabel(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()->translateLabel(),
             ]);
     }
     

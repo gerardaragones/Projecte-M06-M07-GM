@@ -49,4 +49,9 @@ class PlacePolicy
         return $user->id == $place->author_id;
     }
 
+    public function favorite (User $user, Post $post): bool
+    {
+        return $user->role_id == 1;
+    }
+
 }

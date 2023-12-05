@@ -1,0 +1,13 @@
+{
+    "File successfully saved": "Fitxer guardat correctament",
+    "ERROR uploading file": "ERROR en carregar el fitxer",
+    "File succesfully deleted.": "El fitxer s'ha suprimit correctament.",
+    "File": "Arxiu",
+    "Files": "Arxius",
+    "Place successfully saved": "Lloc desat correctament",
+    "ERROR Uploading file": "ERROR S'està carregant el fitxer",
+    "Place successfully deleted": "Lugar eliminado correctamente",
+    "Place favorited successfully": "Lloc afegit a preferits amb èxit",
+    "User already favorited the place.": "L'usuari ja ha marcat com a preferit el lloc.",
+    "Unauthorized. Please log in.": "No autoritzat. Si us plau inicieu sessió."
+}

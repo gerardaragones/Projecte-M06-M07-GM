@@ -13,7 +13,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\FavoriteController;
 use App\Models\Role;
-
+use App\Http\Controllers\LanguageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

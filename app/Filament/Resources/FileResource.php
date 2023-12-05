@@ -24,6 +24,7 @@ class FileResource extends Resource
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('filepath')
+                ->translateLabel()
                 ->required()
                 ->image()
                 ->maxSize(2048)
@@ -40,23 +41,27 @@ class FileResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('filepath'),
-                Tables\Columns\TextColumn::make('filesize'),
+                Tables\Columns\TextColumn::make('filepath')
+                ->translateLabel(),
+                Tables\Columns\TextColumn::make('filesize')
+                ->translateLabel(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                ->translateLabel()
+                ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                ->translateLabel()
+                ->dateTime(),
             ])
             ->filters([ 
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()->translateLabel(),
+                Tables\Actions\EditAction::make()->translateLabel(),
+                Tables\Actions\DeleteAction::make()->translateLabel(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()->translateLabel(),
             ]);
     }
     

@@ -23,15 +23,17 @@ class PostResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $authors = \App\Models\User::pluck('name', 'id')->toArray();
+        $authors = \App\Models\User::pluck('name', 'id')->toArray()->translateLabel();
 
         return $form
             ->schema([
                 Forms\Components\Fieldset::make('File')
+                    ->translateLabel()
                     ->relationship('file')
                     ->saveRelationshipsWhenHidden()
                     ->schema([
                         Forms\Components\FileUpload::make('filepath')
+                        ->translateLabel()
                         ->required()
                         ->image()
                         ->maxSize(2048)
@@ -41,15 +43,19 @@ class PostResource extends Resource
                         }),
                     ]),
                 Forms\Components\Fieldset::make('Post')
+                    ->translateLabel()
                     ->schema([
                         Forms\Components\TextInput::make('file_id')
+                        ->translateLabel()
                         ->required(),
                         Forms\Components\Select::make('author_id')
+                            ->translateLabel()
                             ->label('Author')
                             ->options($authors)
                             ->default(auth()->id())
                             ->required(),
                         Forms\Components\RichEditor::make('body')
+                            ->translateLabel()
                             ->required()
                             ->maxLength(255)
                             ->toolbarButtons([
@@ -64,8 +70,10 @@ class PostResource extends Resource
                                 'undo',
                             ]),
                         Forms\Components\TextInput::make('latitude')
+                            ->translateLabel()
                             ->required(),
                         Forms\Components\TextInput::make('longitude')
+                            ->translateLabel()
                             ->required(),
                     ])
 
@@ -76,14 +84,16 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('file_id'),
-                Tables\Columns\TextColumn::make('author_id'),
-                Tables\Columns\TextColumn::make('body'),
-                Tables\Columns\TextColumn::make('latitude'),
-                Tables\Columns\TextColumn::make('longitude'),
+                Tables\Columns\TextColumn::make('file_id')->translateLabel(),
+                Tables\Columns\TextColumn::make('author_id')->translateLabel(),
+                Tables\Columns\TextColumn::make('body')->translateLabel(),
+                Tables\Columns\TextColumn::make('latitude')->translateLabel(),
+                Tables\Columns\TextColumn::make('longitude')->translateLabel(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime(),
             ])
             ->filters([
@@ -105,6 +115,7 @@ class PostResource extends Resource
             'index' => Pages\ListPosts::route('/'),
             'create' => Pages\CreatePost::route('/create'),
             'view' => Pages\ViewPost::route('/{record}'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),        ];
+            'edit' => Pages\EditPost::route('/{record}/edit'),        
+        ];
     }    
 }

@@ -30,7 +30,7 @@
                 <x-text-input type="text" name="longitude" id="longitude" class="block mt-1 w-full" :value="$post->longitude" />
             </div>
             <div class="mt-8">
-            @can('update', App\Models\Post::class)
+            @can('update', $post)
                 <x-primary-button>
                     {{ __('Update') }}
                 </x-primary-button>
