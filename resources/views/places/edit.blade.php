@@ -34,15 +34,17 @@
                 <x-text-input type="text" name="longitude" id="longitude" class="block mt-1 w-full" :value="$place->longitude" />
             </div>
             <div class="mt-8">
-                <x-primary-button>
-                    {{ __('Update') }}
-                </x-primary-button>
-                <x-secondary-button type="reset">
-                    {{ __('Reset') }}
-                </x-secondary-button>
-                <x-secondary-button href="{{ route('places.index') }}">
-                    {{ __('Back to list') }}
-                </x-secondary-button>
+                @can('update', App\Models\Places::class)
+                    <x-primary-button>
+                        {{ __('Update') }}
+                    </x-primary-button>
+                @endcan
+                    <x-secondary-button type="reset">
+                        {{ __('Reset') }}
+                    </x-secondary-button>
+                    <x-secondary-button href="{{ route('places.index') }}">
+                        {{ __('Back to list') }}
+                    </x-secondary-button>
             </div>
         </form>
     @endsection

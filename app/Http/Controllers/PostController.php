@@ -150,6 +150,7 @@ class PostController extends Controller
 
     public function like(Post $post)
     {
+        $this->authorize('like', $post);
         if (auth()->check()) {
             $existingLike = Like::where('user_id', auth()->user()->id)
                                 ->where('post_id', $post->id)

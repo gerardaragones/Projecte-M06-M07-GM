@@ -72,3 +72,8 @@ Route::resource('places', PlaceController::class)
 
 Route::get('places/{place}/delete', [PlaceController::class, 'delete'])->name('places.delete')
     ->middleware('auth');
+
+
+// Languages
+
+Route::get('/language/{locale}', [LanguageController::class, 'language'])->name('language');
