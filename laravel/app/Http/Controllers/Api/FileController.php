@@ -134,4 +134,9 @@ class FileController extends Controller
             'data'    => $file
         ], 200);
     }
+
+    public function update_workaround(Request $request, $id)
+    {
+        return $this->update($request, $id);
+    }
 }
