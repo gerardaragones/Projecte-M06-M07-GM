@@ -54,7 +54,7 @@
             @can('update', $place)
             <x-primary-button href="{{ route('places.edit', $place) }}">
                 {{ __('Edit') }}
-            </x-danger-button>
+            </x-primary-button>
             @endcan
             @can('delete', $place)
             <x-danger-button href="{{ route('places.delete', $place) }}">
@@ -66,6 +66,11 @@
                 {{ __('Back to list') }}
             </x-secondary-button>
             @endcan
+
+            <!-- Botón para ir a la vista de reseñas -->
+            <x-secondary-button href="{{ route('reviews.index', ['place_id' => $place->id]) }}">
+                {{ __('Reviews') }}
+            </x-secondary-button>
         </div>
         <div class="mt-8">
             <p>{{ $numFavs . " " . __('favorites') }}</p>

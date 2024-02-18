@@ -59,4 +59,9 @@ class Place extends Model
     {
         return $this->belongsTo(Visibility::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

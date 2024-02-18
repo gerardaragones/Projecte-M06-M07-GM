@@ -10,6 +10,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ReviewController;
 
 use App\Models\Role;
 
@@ -93,3 +94,16 @@ Route::controller(PlaceController::class)->group(function () {
 
 Route::get('/language/{locale}', [LanguageController::class, 'language'])
     ->name('language');
+
+// Reviews (Rutas necesarias)
+Route::resource('places.reviews', ReviewController::class)->except(['index', 'create', 'show']);
+Route::get('places/{place}/reviews', [ReviewController::class, 'index'])->name('places.reviews.index');
+Route::get('places/{place}/reviews/create', [ReviewController::class, 'create'])->name('places.reviews.create');
+Route::get('places/{place}/reviews/{review}', [ReviewController::class, 'show'])->name('places.reviews.show');
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+
+Route::middleware(['auth'])->group(function () {
+    // Rutas protegidas que requieren autenticación
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    // Otras rutas...
+});
