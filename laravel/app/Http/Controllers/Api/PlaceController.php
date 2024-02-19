@@ -8,6 +8,7 @@ use App\Models\Place;
 use App\Models\File;
 use App\Models\Favorite;
 use App\Models\User;
+use App\Models\Review;
 
 class PlaceController extends Controller
 {

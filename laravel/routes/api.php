@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\ResourceController;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\PlaceController;
+use App\Http\Controllers\Api\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +34,6 @@ Route::middleware('auth:sanctum')->post('/logout', [TokenController::class, 'log
 Route::middleware('auth:sanctum')->apiResource('places', PlaceController::class);
 Route::middleware('auth:sanctum')->post('places/{place}', [PlaceController::class, 'update_workaround']);
 Route::middleware('auth:sanctum')->post('/places/{place}/favorites', [PlaceController::class, 'favorite'])->name('places.favorite');
+
+Route::middleware('auth:sanctum')->apiResource('places/{place}/reviews', ReviewController::class);
+Route::middleware('auth:sanctum')->post('places/{places}/reviews/{review}', [ReviewController::class, 'update_workaround']);

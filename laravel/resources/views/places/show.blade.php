@@ -54,7 +54,7 @@
             @can('update', $place)
             <x-primary-button href="{{ route('places.edit', $place) }}">
                 {{ __('Edit') }}
-            </x-primary-button>
+            </x-danger-button>
             @endcan
             @can('delete', $place)
             <x-danger-button href="{{ route('places.delete', $place) }}">
