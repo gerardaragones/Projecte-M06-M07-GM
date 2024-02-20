@@ -93,3 +93,10 @@ Route::controller(PlaceController::class)->group(function () {
 
 Route::get('/language/{locale}', [LanguageController::class, 'language'])
     ->name('language');
+
+
+// Comments
+
+Route::resource('posts.coments', ComentController::class)->except(['index', 'create', 'show']);
+Route::post('posts/{post}/coments', [ComentController::class, 'store'])->name('coments.store');
+Route::get('posts/{post}/coments/{coment}', [ComentController::class, 'show'])->name('posts.coments.show');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\ResourceController;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,7 @@ Route::middleware('guest')->post('/login',  [TokenController::class, 'login']);
 
 Route::middleware('auth:sanctum')->apiResource('posts', PostController::class);
 Route::middleware('auth:sactum')->post('posts/{post}', [PostController::class, 'update_workaround']);
-Route::middleware('auth:sanctum')->post('/posts/{posts}/likes', [PlaceController::class, 'like'])->name('post.like');
+Route::middleware('auth:sanctum')->post('/posts/{posts}/likes', [PostController::class, 'like'])->name('post.like');
+
+Route::middleware('auth:sanctum')->apiResource('posts/{post}/comments', CommentController::class);
+Route::middleware('auth:sanctum')->post('posts/{posts}/comments/{comment}', [CommentController::class, 'update_workaround']);
