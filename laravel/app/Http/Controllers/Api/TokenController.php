@@ -28,7 +28,7 @@ class TokenController extends Controller
         $validateData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
         ]);
 
         // Creamos un nuevo usuario con esa informacion

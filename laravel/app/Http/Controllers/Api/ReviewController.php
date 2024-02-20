@@ -25,19 +25,17 @@ class ReviewController extends Controller
         // Verificar si el usuario está autenticado
         if (Auth::check()) {
             $validatedData = $request->validate([
-                'title'       => 'required',
-                'description' => 'required',
-                'rating'      => 'required|numeric|min:1|max:5',
+                'comment' => 'required',
+                'rating'  => 'required|numeric|min:1|max:10', // Actualizado el rango de rating a 1-10
             ]);
     
             // Obtener el ID del usuario autenticado
             $userId = Auth::id();
     
             $review = new Review([
-                'title'       => $request->input('title'),
-                'description' => $request->input('description'),
-                'rating'      => $request->input('rating'),
-                'user_id'     => $userId,
+                'comment' => $request->input('comment'),
+                'rating'  => $request->input('rating'),
+                'user_id' => $userId,
             ]);
     
             $place->reviews()->save($review);
@@ -66,13 +64,11 @@ class ReviewController extends Controller
     public function update(Request $request, Place $place, Review $review)
     {
         $validatedData = $request->validate([
-            'title'       => 'required',
-            'description' => 'required',
-            'rating'      => 'required|numeric|min:1|max:5',
+            'comment' => 'required',
+            'rating'  => 'required|numeric|min:1|max:10', // Actualizado el rango de rating a 1-10
         ]);
 
-        $review->title = $request->input('title');
-        $review->description = $request->input('description');
+        $review->comment = $request->input('comment');
         $review->rating = $request->input('rating');
         $review->save();
 

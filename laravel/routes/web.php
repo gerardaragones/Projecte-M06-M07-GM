@@ -97,13 +97,5 @@ Route::get('/language/{locale}', [LanguageController::class, 'language'])
 
 // Reviews (Rutas necesarias)
 Route::resource('places.reviews', ReviewController::class)->except(['index', 'create', 'show']);
-Route::get('places/{place}/reviews', [ReviewController::class, 'index'])->name('places.reviews.index');
-Route::get('places/{place}/reviews/create', [ReviewController::class, 'create'])->name('places.reviews.create');
+Route::post('places/{place}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('places/{place}/reviews/{review}', [ReviewController::class, 'show'])->name('places.reviews.show');
-Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
-
-Route::middleware(['auth'])->group(function () {
-    // Rutas protegidas que requieren autenticación
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    // Otras rutas...
-});

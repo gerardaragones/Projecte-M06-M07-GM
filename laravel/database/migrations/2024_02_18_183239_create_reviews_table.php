@@ -15,11 +15,10 @@ class CreateReviewsTable extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignId('place_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Agrega la columna 'user_id'
-            $table->string('title');
-            $table->text('description');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->text('comment');
             $table->integer('rating');
-            // Aquí puedes agregar más columnas según tus necesidades, como el autor de la reseña, etc.
+            // No necesitas 'comment' en la migración si no está en el $fillable del modelo
             $table->timestamps();
         });
     }
