@@ -26,7 +26,7 @@ class CommentController extends Controller
     
         $post->comments()->create($commentData);
 
-        return redirect()->route('posts.comments.index', $post)
+        return redirect()->route('posts.show', $post)
             ->with('success', 'Comment created successfully');
     }
 
@@ -43,7 +43,7 @@ class CommentController extends Controller
     {
         if (Auth::id() == $comment->user_id || Auth::user()->role_id == Role::ADMIN) {
             $comment->delete();
-            return redirect()->route('posts.comments.index', $post)
+            return redirect()->route('posts.show', $post)
                 ->with('success', 'Comment deleted successfully');
         } else {
             abort(403, 'Unauthorized');

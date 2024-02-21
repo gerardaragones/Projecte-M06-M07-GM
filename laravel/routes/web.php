@@ -10,6 +10,8 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\CommentController;
+
 
 use App\Models\Role;
 
@@ -97,6 +99,10 @@ Route::get('/language/{locale}', [LanguageController::class, 'language'])
 
 // Comments
 
-Route::resource('posts.coments', ComentController::class)->except(['index', 'create', 'show']);
-Route::post('posts/{post}/coments', [ComentController::class, 'store'])->name('coments.store');
-Route::get('posts/{post}/coments/{coment}', [ComentController::class, 'show'])->name('posts.coments.show');
+Route::get('posts/{post}/comments/create', [CommentController::class, 'create'])->name('comments.create');
+
+Route::post('posts/{post}/comments/store', [CommentController::class, 'store'])->name('comments.store');
+
+Route::get('posts/{post}/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+
+Route::delete('posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
