@@ -22,76 +22,62 @@ class CommentController extends Controller
 
     public function store(Request $request, Post $post)
     {
-        if (Auth::check()) {
-            $validatedData = $request->validate([
-                'title'       => 'required',
-                'description' => 'required',
-                'rating'      => 'required|numeric|min:1|max:5',
-            ]);
-
-            $userId = Auth::id();
-
-            $comment = new Comment([
-                'title'       => $request->input('title'),
-                'description' => $request->input('description'),
-                'rating'      => $request->input('rating'),
-                'user_id'     => $userId,
-            ]);
-
-            $post->comments()->save($comment);
-
-            return response()->json([
-                'success' => true,
-                'data'    => $comment,
-            ], 201);
-        } else {
-
+        if (!Auth::check()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Usuario no autenticado',
             ], 401);
         }
-    }
 
-    public function show(Post $post, Comment $comment) // Cambiado de Place a Post y de Review a Comment
-    {
-        return response()->json([
-            'success' => true,
-            'data'    => $comment, // Cambiado de reviews a comments
-        ], 200);
-    }
-
-    public function update(Request $request, Post $post, Comment $comment) // Cambiado de Place a Post y de Review a Comment
-    {
         $validatedData = $request->validate([
-            'title'       => 'required',
-            'description' => 'required',
-            'rating'      => 'required|numeric|min:1|max:5',
+            'comment' => 'required',
         ]);
 
-        $comment->title = $request->input('title');
-        $comment->description = $request->input('description');
-        $comment->rating = $request->input('rating');
-        $comment->save();
+        $comment = $post->comments()->create([
+            'comment' => $request->input('comment'),
+            'user_id' => Auth::id(),
+        ]);
 
         return response()->json([
             'success' => true,
-            'data'    => $comment, // Cambiado de reviews a comments
+            'data'    => $comment,
+        ], 201);
+    }
+
+    public function show(Post $post, Comment $comment)
+    {
+        return response()->json([
+            'success' => true,
+            'data'    => $comment,
         ], 200);
     }
 
-    public function destroy(Post $post, Comment $comment) // Cambiado de Place a Post y de Review a Comment
+    public function update(Request $request, Post $post, Comment $comment)
+    {
+        $validatedData = $request->validate([
+            'comment' => 'required',
+        ]);
+
+        $comment->update(['comment' => $request->input('comment')]);
+
+        return response()->json([
+            'success' => true,
+            'data'    => $comment,
+        ], 200);
+    }
+
+    public function destroy(Post $post, Comment $comment)
     {
         $comment->delete();
 
         return response()->json([
             'success' => true,
-            'message' => 'Comment deleted successfully', // Cambiado de Review a Comment
+            'message' => 'Comment deleted successfully',
         ], 200);
     }
 
-    public function update_workaround(Request $request, Post $post, Comment $comment) // Cambiado de Place a Post y de Review a Comment
+    public function update_workaround(Request $request, Post $post, Comment $comment)
     {
-        return $this->update($request, $post, $comment); // Cambiado de reviews a comments
+        return $this->update($request, $post, $comment);
     }
 }

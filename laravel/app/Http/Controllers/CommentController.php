@@ -18,18 +18,16 @@ class CommentController extends Controller
     public function store(Request $request, Post $post)
     {
         $request->validate([
-            'content' => 'required|string',
+            'comment' => 'required|string',
         ]);
 
-        $post->comments()->create($request->all());
+        $commentData = $request->all();
+        $commentData['user_id'] = Auth::id();
+    
+        $post->comments()->create($commentData);
 
         return redirect()->route('posts.comments.index', $post)
             ->with('success', 'Comment created successfully');
-    }
-
-    public function show(Post $post, Comment $comment)
-    {
-        return view('comments.show', compact('comment'));
     }
 
     public function edit(Post $post, Comment $comment)
