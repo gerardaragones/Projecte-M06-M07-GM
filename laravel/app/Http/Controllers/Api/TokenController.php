@@ -33,9 +33,9 @@ class TokenController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
             'role_id' => 1
         ]);
 
@@ -80,14 +80,14 @@ class TokenController extends Controller
 
     public function logout(Request $request)
     {
-        if (null != $request->user()->tokens()) {
+        if ($request->user()->tokens()->exists()) {
             $request->user()->tokens()->delete();
-
+    
             return response()->json([
                 'success' => true,
                 'message' => 'User logged out successfully'
             ]);
-        }else{
+        } else {
             return response()->json([
                 'success' => false,
                 'message' => 'User logged out unauthorized'

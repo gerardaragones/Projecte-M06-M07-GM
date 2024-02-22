@@ -50,11 +50,16 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsTo(Role::class);
     }
 
-    public function canAccessFilament() : bool
+    public function canAccessFilament(): bool
     {
         $roles = [Role::ADMIN, Role::EDITOR];
-        Log::debug("User with role '{$this->role->name}' accessing Filament");
-        return in_array($this->role->id, $roles);
+        if ($this->relationLoaded('role')) {
+            Log::debug("User with role '{$this->role->name}' accessing Filament");
+            return in_array($this->role->id, $roles);
+        } else {
+            Log::debug("User accessing Filament, but role is not loaded");
+            return false;
+        }
     }
 
     public function isAdmin()
