@@ -10,6 +10,8 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\CommentController;
+
 use App\Http\Controllers\ReviewController;
 
 use App\Models\Role;
@@ -94,6 +96,17 @@ Route::controller(PlaceController::class)->group(function () {
 
 Route::get('/language/{locale}', [LanguageController::class, 'language'])
     ->name('language');
+
+
+// Comments
+
+Route::get('posts/{post}/comments/create', [CommentController::class, 'create'])->name('comments.create');
+
+Route::post('posts/{post}/comments/store', [CommentController::class, 'store'])->name('comments.store');
+
+Route::get('posts/{post}/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+
+Route::delete('posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 // Reviews (Rutas necesarias)
 Route::resource('places.reviews', ReviewController::class)->except(['index', 'create', 'show']);

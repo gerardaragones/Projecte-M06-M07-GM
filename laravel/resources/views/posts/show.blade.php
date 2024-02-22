@@ -67,6 +67,51 @@
             <p>{{ $numLikes . " " . __('likes') }}</p>
             @include('partials.buttons-likes')
         </div>
+        @auth
+            <div class="mt-8">
+                <h2>{{ __('Add a Comment') }}</h2>
+                <form method="POST" action="{{ route('comments.store', $post) }}">
+                    @csrf
+
+                    <div class="mb-4">
+                        <label for="comment" class="block text-gray-700 font-bold mb-2">{{ __('Comment') }}</label>
+                        <textarea id="comment" class="form-textarea rounded-md shadow-sm w-full" name="comment" rows="4" required></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-end">
+                        <x-primary-button type="submit">
+                            {{ __('Submit Comment') }}
+                        </x-primary-button>
+                    </div>
+                </form>
+            </div>
+        @endauth
+
+        <!-- Mostrar comentarios -->
+        <div class="mt-8">
+            <h2>{{ __('Comments') }}</h2>
+            <ul>
+                @foreach($post->comments as $comment)
+                    <div class="mt-4 border p-4">
+                        <div>
+                            <strong>User:</strong> {{ $comment->user }}
+                        </div>
+                        <div>
+                            <strong>Comment:</strong> {{ $comment->comment }}
+                        </div>
+                        @auth
+                            @if($comment->user_id === auth()->id())
+                                <form method="POST" action="{{ route('comments.destroy', ['post' => $post, 'comment' => $comment]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500">{{ __('Delete Comment') }}</button>
+                                </form>
+                            @endif
+                        @endauth
+                    </div>
+                @endforeach
+            </ul>
+        </div>
     @endsection
 </x-columns>
 @endsection
