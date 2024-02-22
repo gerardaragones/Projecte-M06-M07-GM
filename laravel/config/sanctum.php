@@ -1,6 +1,7 @@
 <?php
 
 use Laravel\Sanctum\Sanctum;
+use Laravel\Santcum\HasApiTokens;
 
 return [
 
