@@ -21,6 +21,15 @@
             @endphp
             <link rel="stylesheet" href="{{ asset('build/'.$manifest['resources/css/app.css']['file']) }}">
             <script type="module" src="{{ asset('build/'.$manifest['resources/js/app.js']['file']) }}"></script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-39XGQ0JH4K"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+                gtag('js', new Date());
+                gtag('config', 'G-39XGQ0JH4K');
+            </script>
         @endenv
     </head>
     <body class="font-sans antialiased">
